@@ -1,3 +1,15 @@
+*あとでけすゾ*
+```
+I18nのためのdir構造とymlをコマンドから自動生成したい
+https://github.com/ctran/annotate_models
+みたいな。
+directoryは自動生成できるようになったので、ERB使ってうまいことfileつくれるようになればとりあえずおk
+```
+
+*この状態だとgemからでは動かないのでrails console にはっつけて I18nMapping.execute(:ja, :en) みたいにつかう*
+
+
+
 # I18nMapping
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/i18n_mapping`. To experiment with that code, run `bin/console` for an interactive prompt.
