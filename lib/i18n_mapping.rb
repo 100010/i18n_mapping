@@ -25,13 +25,15 @@ module I18nMapping
           path = dist_path(model_name) + langage.to_s
           FileUtils.mkdir_p(path) unless directory_exists?(path)
         end
-      end
+        true
+      end rescue false
     end
 
     def write_model_atrribute
       model_names.each do |model_name|
         dist_path(model_name)
-      end
+        true
+      end rescue false
     end
 
     def render(template)
@@ -40,7 +42,7 @@ module I18nMapping
 
     def valid_lang?(langages)
       unless langages.all?{ |lang| lang.to_sym.in? AVALILABLE_LANGUAGE }
-        raise InvalidLanguageError.new('Includes invalid language')
+        raise InvalidLanguageError.new('Arguments you passed included invalid language')
       end
     end
 
