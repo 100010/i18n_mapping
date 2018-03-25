@@ -8,14 +8,15 @@ module I18nMapping
 
     def execute(*args)
       valid_lang?(args)
-      create_dir(args)
-      write_model_atrribute
     end
 
     def model_names
       ActiveRecord::Base.connection.tables.map do |model|
         model.singularize
       end
+    end
+
+    def map!(languages, model)
     end
 
     def create_dir(langages)
@@ -25,8 +26,10 @@ module I18nMapping
           path = dist_path(model_name) + langage.to_s
           FileUtils.mkdir_p(path) unless directory_exists?(path)
         end
-        true
-      end rescue false
+      end
+      true
+    rescue
+      false
     end
 
     def write_model_atrribute
