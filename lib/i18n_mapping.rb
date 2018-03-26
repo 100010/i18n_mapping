@@ -1,22 +1,28 @@
 require "i18n_mapping/version"
+require 'pry'
+require 'yaml'
+require 'erb'
 
+I18nMapping.execute(:en)
 module I18nMapping
   class InvalidLanguageError < StandardError ; end
   class << self
 
     AVALILABLE_LANGUAGE = [ :ja, :en, :zh ]
 
+    def initialize(language, )
+
+    end
     def execute(*args)
       valid_lang?(args)
+      create_dir(args)
+      write_model_atrribute
     end
 
     def model_names
       ActiveRecord::Base.connection.tables.map do |model|
         model.singularize
       end
-    end
-
-    def map!(languages, model)
     end
 
     def create_dir(langages)
@@ -32,21 +38,32 @@ module I18nMapping
       false
     end
 
-    def write_model_atrribute
-      model_names.each do |model_name|
-        dist_path(model_name)
+    def write_model_atrribute(languages)
+      languages.each do |lang|
+        model_names.each do |model_name|
+          dist_path(model_name)
+          render_yml(model_name, lang)
+        end
         true
-      end rescue false
+      end　rescue false
     end
 
-    def render(template)
-      ERB.new(template).result(binding)
+    def render_yml(model_name, lang)
+      columns = model_name.classify.constantize.attribute_names
+      File.write(dist_path(model_name) + lang, et.render(File.read(tmp_ansi_path + 'inventory')))
+      ERB
+        .new(model_name,columns,lang)
+        .result(binding)
+        .render(File.read(tmp_ansi_path + 'inventory'))
     end
 
     def valid_lang?(langages)
       unless langages.all?{ |lang| lang.to_sym.in? AVALILABLE_LANGUAGE }
         raise InvalidLanguageError.new('Arguments you passed included invalid language')
       end
+    end
+
+    def copy_template
     end
 
     def directory_exists?(path)

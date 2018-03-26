@@ -2,8 +2,8 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-gem 'activerecord', require: false
-
+gem 'yaml'
+gem 'erb'
 group :development, :test do
   gem 'byebug'
   gem 'guard-rspec', require: false
